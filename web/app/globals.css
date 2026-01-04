@@ -1,0 +1,81 @@
+:root{
+    --bg:#000000;
+      --fg: rgba(235,235,235,0.72);     /* main line soft gray */
+        --sub: rgba(235,235,235,0.28);    /* enter much dimmer */
+        }
+
+        *{ box-sizing:border-box; }
+
+        html,body{ height:100%; }
+
+        body{
+          margin:0;
+            background:var(--bg);
+              color:var(--fg);
+                font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+                }
+
+                /* Fullscreen + lower-third placement */
+                .screen{
+                  min-height: 100vh;
+                    min-height: 100dvh;
+                      position: relative;
+                        background: var(--bg);
+                        }
+
+                        /* Centered horizontally, placed lower than center */
+                        .stack{
+                          position: absolute;
+                            left: 50%;
+                              top: 62%;
+                                transform: translate(-50%, -50%);
+                                  width: min(720px, 92vw);
+                                    text-align: center;
+                                    }
+
+                                    .mainLine{
+                                      margin: 0;
+                                        font-size: 24px;
+                                          letter-spacing: 0.06em;
+                                            font-weight: 400;
+                                              color: var(--fg);
+                                              }
+
+                                              .enterLine{
+                                                margin: 28px 0 0 0;
+                                                  font-size: 18px;
+                                                    letter-spacing: 0.22em;
+                                                      font-weight: 400;
+                                                        color: var(--sub);
+                                                        }
+
+                                                        .fadeIn{
+                                                          animation: fadeIn 700ms ease-out both;
+                                                          }
+
+                                                          @keyframes fadeIn{
+                                                            from{ opacity:0; transform: translateY(6px); }
+                                                              to{ opacity:1; transform: translateY(0); }
+                                                              }
+
+                                                              .signalWrap{
+                                                                  display: grid;
+                                                                    place-items: center;
+                                                                      margin-bottom: 26px;
+                                                                      }
+
+                                                                      .signalDot{
+                                                                        width: 10px;
+                                                                          height: 10px;
+                                                                            border-radius: 999px;
+                                                                              background: rgba(235,235,235,0.55);
+                                                                                animation: pulse 1200ms ease-in-out infinite;
+                                                                                }
+
+                                                                                @keyframes pulse{
+                                                                                  0%   { transform: scale(1);   opacity: 0.35; }
+                                                                                    50%  { transform: scale(1.9); opacity: 0.85; }
+                                                                                      100% { transform: scale(1);   opacity: 0.35; }
+                                                                                      }
+
+                                                              
