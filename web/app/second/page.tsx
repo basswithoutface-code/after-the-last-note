@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 type Stage = 0 | 1 | 2;
 // 0: blank
 // 1: signal visible + audio playing
-// 2: text visible + tap enabled + 3s countdown to auto-advance
+// 2: text visible + tap enabled + countdown to auto-advance
 
 export default function SecondPage() {
   const router = useRouter();
@@ -17,85 +17,88 @@ export default function SecondPage() {
         const timers = useRef<number[]>([]);
           const audioRef = useRef<HTMLAudioElement | null>(null);
 
-            const clearTimers = () => {
-                timers.current.forEach((t) => window.clearTimeout(t));
-                    timers.current = [];
-                      };
+            const BEAT = 1000;
+              const AFTER_AUDIO = 1500;
+                const FINAL_WINDOW = 3000;
 
-                        const advance = () => {
-                            clearTimers();
-                                if (audioRef.current) {
-                                      audioRef.current.pause();
-                                            audioRef.current.currentTime = 0;
-                                                }
-                                                    router.push("/third");
-                                                      };
+                  const clearTimers = () => {
+                      timers.current.forEach((t) => window.clearTimeout(t));
+                          timers.current = [];
+                            };
 
-                                                        const startFinalWindow = () => {
-                                                            setStage(2);
-                                                                setTapEnabled(true);
-                                                                    timers.current.push(window.setTimeout(() => advance(), 3000));
-                                                                      };
+                              const advance = () => {
+                                  clearTimers();
+                                      if (audioRef.current) {
+                                            audioRef.current.pause();
+                                                  audioRef.current.currentTime = 0;
+                                                      }
+                                                          router.push("/third");
+                                                            };
 
-                                                                        useEffect(() => {
-                                                                            clearTimers();
+                                                              const startFinalWindow = () => {
+                                                                  setStage(2);
+                                                                      setTapEnabled(true);
+                                                                          timers.current.push(window.setTimeout(() => advance(), FINAL_WINDOW));
+                                                                            };
 
-                                                                                // +1.0s -> show signal + play audio
-                                                                                    timers.current.push(
-                                                                                          window.setTimeout(() => {
-                                                                                                  setStage(1);
+                                                                              useEffect(() => {
+                                                                                  clearTimers();
 
-                                                                                                          const a = audioRef.current;
-                                                                                                                  if (!a) return;
+                                                                                      timers.current.push(
+                                                                                            window.setTimeout(() => {
+                                                                                                    setStage(1);
 
-                                                                                                                          a.currentTime = 0;
-                                                                                                                                  a.play().catch(() => {
-                                                                                                                                            // Autoplay may be blocked. We'll allow tap to start audio.
-                                                                                                                                                    });
-                                                                                                                                                          }, 1000)
-                                                                                                                                                              );
+                                                                                                            const a = audioRef.current;
+                                                                                                                    if (!a) return;
 
-                                                                                                                                                                  return () => clearTimers();
-                                                                                                                                                                      // eslint-disable-next-line react-hooks/exhaustive-deps
-                                                                                                                                                                        }, []);
+                                                                                                                            a.currentTime = 0;
+                                                                                                                                    a.play().catch(() => {
+                                                                                                                                              // Autoplay may be blocked on mobile.
+                                                                                                                                                        // One tap (while stage === 1) will attempt play again.
+                                                                                                                                                                });
+                                                                                                                                                                      }, BEAT)
+                                                                                                                                                                          );
 
-                                                                                                                                                                          const onAudioEnded = () => {
-                                                                                                                                                                              // after audio ends -> wait 1.5s -> show text and start 3s window
-                                                                                                                                                                                  clearTimers();
-                                                                                                                                                                                      timers.current.push(window.setTimeout(() => startFinalWindow(), 1500));
-                                                                                                                                                                                        };
+                                                                                                                                                                              return () => clearTimers();
+                                                                                                                                                                                  // eslint-disable-next-line react-hooks/exhaustive-deps
+                                                                                                                                                                                    }, []);
 
-                                                                                                                                                                                          const onTap = () => {
-                                                                                                                                                                                              if (tapEnabled) {
-                                                                                                                                                                                                    advance();
-                                                                                                                                                                                                          return;
-                                                                                                                                                                                                              }
+                                                                                                                                                                                      const onAudioEnded = () => {
+                                                                                                                                                                                          clearTimers();
+                                                                                                                                                                                              timers.current.push(window.setTimeout(() => startFinalWindow(), AFTER_AUDIO));
+                                                                                                                                                                                                };
 
-                                                                                                                                                                                                                  // If autoplay was blocked, one tap can start audio once stage 1 is visible.
-                                                                                                                                                                                                                      if (stage === 1 && audioRef.current) {
-                                                                                                                                                                                                                            audioRef.current.play().catch(() => {});
-                                                                                                                                                                                                                                }
-                                                                                                                                                                                                                                  };
+                                                                                                                                                                                                  const onTap = () => {
+                                                                                                                                                                                                      if (tapEnabled) {
+                                                                                                                                                                                                            advance();
+                                                                                                                                                                                                                  return;
+                                                                                                                                                                                                                      }
 
-                                                                                                                                                                                                                                    return (
-                                                                                                                                                                                                                                        <main className="screen" onClick={onTap}>
-                                                                                                                                                                                                                                              <section className="stack" aria-label="Transition">
-                                                                                                                                                                                                                                                      {stage >= 1 && (
-                                                                                                                                                                                                                                                                <div className={`signalWrap ${stage === 1 ? "fadeIn" : ""}`}>
-                                                                                                                                                                                                                                                                            <div className="signalDot" />
-                                                                                                                                                                                                                                                                                      </div>
-                                                                                                                                                                                                                                                                                              )}
+                                                                                                                                                                                                                          // If autoplay was blocked, one tap can start audio once signal is visible.
+                                                                                                                                                                                                                              if (stage === 1 && audioRef.current) {
+                                                                                                                                                                                                                                    audioRef.current.play().catch(() => {});
+                                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                                          };
 
-                                                                                                                                                                                                                                                                                                      {stage >= 2 && <p className="mainLine fadeIn">It existed.</p>}
-                                                                                                                                                                                                                                                                                                            </section>
+                                                                                                                                                                                                                                            return (
+                                                                                                                                                                                                                                                <main className="screen" onClick={onTap}>
+                                                                                                                                                                                                                                                      <section className="stack" aria-label="Transition">
+                                                                                                                                                                                                                                                              {stage >= 1 && (
+                                                                                                                                                                                                                                                                        <div className={`signalWrap ${stage === 1 ? "fadeIn" : ""}`}>
+                                                                                                                                                                                                                                                                                    <div className="signalDot" />
+                                                                                                                                                                                                                                                                                              </div>
+                                                                                                                                                                                                                                                                                                      )}
 
-                                                                                                                                                                                                                                                                                                                  <audio
-                                                                                                                                                                                                                                                                                                                          ref={audioRef}
-                                                                                                                                                                                                                                                                                                                                  src="/Atln.m4a"
-                                                                                                                                                                                                                                                                                                                                          preload="auto"
-                                                                                                                                                                                                                                                                                                                                                  onEnded={onAudioEnded}
-                                                                                                                                                                                                                                                                                                                                                        />
-                                                                                                                                                                                                                                                                                                                                                            </main>
-                                                                                                                                                                                                                                                                                                                                                              );
-                                                                                                                                                                                                                                                                                                                                                              }
-                                                                                                                                                                                                                                                                                                                                                              
+                                                                                                                                                                                                                                                                                                              {stage >= 2 && <p className="mainLine fadeIn">It existed.</p>}
+                                                                                                                                                                                                                                                                                                                    </section>
+
+                                                                                                                                                                                                                                                                                                                          <audio
+                                                                                                                                                                                                                                                                                                                                  ref={audioRef}
+                                                                                                                                                                                                                                                                                                                                          src="/Atln.m4a"
+                                                                                                                                                                                                                                                                                                                                                  preload="auto"
+                                                                                                                                                                                                                                                                                                                                                          onEnded={onAudioEnded}
+                                                                                                                                                                                                                                                                                                                                                                />
+                                                                                                                                                                                                                                                                                                                                                                    </main>
+                                                                                                                                                                                                                                                                                                                                                                      );
+                                                                                                                                                                                                                                                                                                                                                                      }
+                                                                                                                                                                                                                                                                                                                                                                      

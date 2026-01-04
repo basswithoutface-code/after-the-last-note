@@ -25,35 +25,39 @@ export default function Page() {
                                       useEffect(() => {
                                           clearTimers();
 
-                                              // +1.0s -> show main line
-                                                  timers.current.push(window.setTimeout(() => setStage(1), 1000));
+                                              const BEAT = 1000; // base beat
+                                                  const FADE_GAP = 1500; // main -> enter
+                                                      const AUTO_AFTER_ENTER = 3000;
 
-                                                      // +1.5s after main -> show enter (total 2.5s)
-                                                          timers.current.push(window.setTimeout(() => setStage(2), 2500));
+                                                          timers.current.push(window.setTimeout(() => setStage(1), BEAT));
+                                                              timers.current.push(window.setTimeout(() => setStage(2), BEAT + FADE_GAP));
+                                                                  timers.current.push(
+                                                                        window.setTimeout(
+                                                                                () => advance(),
+                                                                                        BEAT + FADE_GAP + AUTO_AFTER_ENTER
+                                                                                              )
+                                                                                                  );
 
-                                                              // +3.0s after enter -> auto-advance (total 5.5s)
-                                                                  timers.current.push(window.setTimeout(() => advance(), 5500));
+                                                                                                      return () => clearTimers();
+                                                                                                          // eslint-disable-next-line react-hooks/exhaustive-deps
+                                                                                                            }, []);
 
-                                                                      return () => clearTimers();
-                                                                          // eslint-disable-next-line react-hooks/exhaustive-deps
-                                                                            }, []);
+                                                                                                              const onTap = () => {
+                                                                                                                  if (stage === 2) advance();
+                                                                                                                    };
 
-                                                                              const onTap = () => {
-                                                                                  if (stage === 2) advance();
-                                                                                    };
+                                                                                                                      return (
+                                                                                                                          <main className="screen" onClick={onTap}>
+                                                                                                                                <section className="stack" aria-label="Intro">
+                                                                                                                                        {stage >= 1 && (
+                                                                                                                                                  <p className={`mainLine ${stage === 1 ? "fadeIn" : ""}`}>
+                                                                                                                                                              No names. No echo. Just now.
+                                                                                                                                                                        </p>
+                                                                                                                                                                                )}
 
-                                                                                      return (
-                                                                                          <main className="screen" onClick={onTap}>
-                                                                                                <section className="stack" aria-label="Intro">
-                                                                                                        {stage >= 1 && (
-                                                                                                                  <p className={`mainLine ${stage === 1 ? "fadeIn" : ""}`}>
-                                                                                                                              No names. No echo. Just now.
-                                                                                                                                        </p>
-                                                                                                                                                )}
-
-                                                                                                                                                        {stage >= 2 && <p className="enterLine fadeIn">enter</p>}
-                                                                                                                                                              </section>
-                                                                                                                                                                  </main>
-                                                                                                                                                                    );
-                                                                                                                                                                    }
-                                                                                                                                                                    
+                                                                                                                                                                                        {stage >= 2 && <p className="enterLine fadeIn">enter</p>}
+                                                                                                                                                                                              </section>
+                                                                                                                                                                                                  </main>
+                                                                                                                                                                                                    );
+                                                                                                                                                                                                    }
+                                                                                                                                                                                                    

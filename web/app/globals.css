@@ -12,141 +12,138 @@
 
                /* UI borders */
                  --border: rgba(235,235,235,0.35);
-                 }
 
-                 *{
-                   box-sizing: border-box;
-                   }
+                   /* Motion system */
+                     --fade-ms: 650ms;
+                       --ease: cubic-bezier(0.16, 1, 0.3, 1);
+                       }
 
-                   /* ------------------------------
-                      Base document
-                      --------------------------------*/
-                      html,
-                      body{
-                        height: 100%;
-                        }
+                       *{
+                         box-sizing: border-box;
+                         }
 
-                        body{
-                          margin: 0;
-                            background: var(--bg);
-                              color: var(--fg);
-                                font-family: ui-sans-serif, system-ui, -apple-system,
-                                               Segoe UI, Roboto, Helvetica, Arial;
-                                                 -webkit-font-smoothing: antialiased;
-                                                 }
+                         /* ------------------------------
+                            Base document
+                            --------------------------------*/
+                            html,
+                            body{
+                              height: 100%;
+                              }
 
-                                                 /* ------------------------------
-                                                    Fullscreen screen container
-                                                    --------------------------------*/
-                                                    .screen{
-                                                      min-height: 100vh;
-                                                        min-height: 100dvh;
-                                                          position: relative;
-                                                            background: var(--bg);
-                                                            }
+                              body{
+                                margin: 0;
+                                  background: var(--bg);
+                                    color: var(--fg);
+                                      font-family: ui-sans-serif, system-ui, -apple-system,
+                                                     Segoe UI, Roboto, Helvetica, Arial;
+                                                       -webkit-font-smoothing: antialiased;
+                                                       }
 
-                                                            /* ------------------------------
-                                                               Centered content stack
-                                                                  (slightly lower than center)
-                                                                  --------------------------------*/
-                                                                  .stack{
-                                                                    position: absolute;
-                                                                      left: 50%;
-                                                                        top: 62%;
-                                                                          transform: translate(-50%, -50%);
-                                                                            width: min(720px, 92vw);
-                                                                              text-align: center;
-                                                                              }
+                                                       /* ------------------------------
+                                                          Fullscreen screen container
+                                                          --------------------------------*/
+                                                          .screen{
+                                                            min-height: 100vh;
+                                                              min-height: 100dvh;
+                                                                position: relative;
+                                                                  background: var(--bg);
+                                                                  }
 
-                                                                              /* ------------------------------
-                                                                                 Typography
-                                                                                 --------------------------------*/
-                                                                                 .mainLine{
-                                                                                   margin: 0;
-                                                                                     font-size: 24px;
-                                                                                       letter-spacing: 0.06em;
-                                                                                         font-weight: 400;
-                                                                                           color: var(--fg);
-                                                                                           }
+                                                                  /* ------------------------------
+                                                                     Centered content stack
+                                                                        (slightly lower than center)
+                                                                        --------------------------------*/
+                                                                        .stack{
+                                                                          position: absolute;
+                                                                            left: 50%;
+                                                                              top: 62%;
+                                                                                transform: translate(-50%, -50%);
+                                                                                  width: min(720px, 92vw);
+                                                                                    text-align: center;
+                                                                                    }
 
-                                                                                           .enterLine{
-                                                                                             margin: 28px 0 0 0;
-                                                                                               font-size: 18px;
-                                                                                                 letter-spacing: 0.22em;
-                                                                                                   font-weight: 400;
-                                                                                                     color: var(--sub);
-                                                                                                     }
+                                                                                    /* ------------------------------
+                                                                                       Typography
+                                                                                       --------------------------------*/
+                                                                                       .mainLine{
+                                                                                         margin: 0;
+                                                                                           font-size: 24px;
+                                                                                             letter-spacing: 0.06em;
+                                                                                               font-weight: 400;
+                                                                                                 color: var(--fg);
+                                                                                                 }
 
-                                                                                                     /* ------------------------------
-                                                                                                        Fade-in animation
-                                                                                                        --------------------------------*/
-                                                                                                        .fadeIn{
-                                                                                                          animation: fadeIn 700ms ease-out both;
-                                                                                                          }
+                                                                                                 .enterLine{
+                                                                                                   margin: 28px 0 0 0;
+                                                                                                     font-size: 18px;
+                                                                                                       letter-spacing: 0.22em;
+                                                                                                         font-weight: 400;
+                                                                                                           color: var(--sub);
+                                                                                                           }
 
-                                                                                                          @keyframes fadeIn{
-                                                                                                            from{
-                                                                                                                opacity: 0;
-                                                                                                                    transform: translateY(6px);
-                                                                                                                      }
-                                                                                                                        to{
-                                                                                                                            opacity: 1;
-                                                                                                                                transform: translateY(0);
-                                                                                                                                  }
-                                                                                                                                  }
+                                                                                                           /* ------------------------------
+                                                                                                              Motion: Fade-in
+                                                                                                              --------------------------------*/
+                                                                                                              .fadeIn{
+                                                                                                                animation: fadeIn var(--fade-ms) var(--ease) both;
+                                                                                                                }
 
-                                                                                                                                  /* ------------------------------
-                                                                                                                                     Page 2: signal indicator
-                                                                                                                                     --------------------------------*/
-                                                                                                                                     .signalWrap{
-                                                                                                                                       display: grid;
-                                                                                                                                         place-items: center;
-                                                                                                                                           margin-bottom: 26px;
-                                                                                                                                           }
+                                                                                                                @keyframes fadeIn{
+                                                                                                                  from{ opacity: 0; }
+                                                                                                                    to{ opacity: 1; }
+                                                                                                                    }
 
-                                                                                                                                           .signalDot{
-                                                                                                                                             width: 10px;
-                                                                                                                                               height: 10px;
-                                                                                                                                                 border-radius: 999px;
-                                                                                                                                                   background: rgba(235,235,235,0.55);
-                                                                                                                                                     animation: pulse 1200ms ease-in-out infinite;
-                                                                                                                                                     }
+                                                                                                                    /* ------------------------------
+                                                                                                                       Page 2: signal indicator
+                                                                                                                       --------------------------------*/
+                                                                                                                       .signalWrap{
+                                                                                                                         display: grid;
+                                                                                                                           place-items: center;
+                                                                                                                             margin-bottom: 26px;
+                                                                                                                             }
 
-                                                                                                                                                     @keyframes pulse{
-                                                                                                                                                       0%{
-                                                                                                                                                           transform: scale(1);
-                                                                                                                                                               opacity: 0.35;
-                                                                                                                                                                 }
-                                                                                                                                                                   50%{
-                                                                                                                                                                       transform: scale(1.9);
-                                                                                                                                                                           opacity: 0.85;
-                                                                                                                                                                             }
-                                                                                                                                                                               100%{
-                                                                                                                                                                                   transform: scale(1);
-                                                                                                                                                                                       opacity: 0.35;
-                                                                                                                                                                                         }
-                                                                                                                                                                                         }
+                                                                                                                             .signalDot{
+                                                                                                                               width: 10px;
+                                                                                                                                 height: 10px;
+                                                                                                                                   border-radius: 999px;
+                                                                                                                                     background: rgba(235,235,235,0.55);
+                                                                                                                                       animation: pulse 1600ms var(--ease) infinite;
+                                                                                                                                       }
 
-                                                                                                                                                                                         /* ------------------------------
-                                                                                                                                                                                            Buttons (shared visual language)
-                                                                                                                                                                                            --------------------------------*/
-                                                                                                                                                                                            button{
-                                                                                                                                                                                              background: transparent;
-                                                                                                                                                                                                border: 1px solid var(--border);
-                                                                                                                                                                                                  color: var(--fg);
-                                                                                                                                                                                                    border-radius: 999px;
-                                                                                                                                                                                                      font-family: inherit;
-                                                                                                                                                                                                      }
+                                                                                                                                       @keyframes pulse{
+                                                                                                                                         0%   { transform: scale(1);   opacity: 0.35; }
+                                                                                                                                           50%  { transform: scale(1.9); opacity: 0.85; }
+                                                                                                                                             100% { transform: scale(1);   opacity: 0.35; }
+                                                                                                                                             }
 
-                                                                                                                                                                                                      button:disabled{
-                                                                                                                                                                                                        opacity: 0.6;
-                                                                                                                                                                                                          cursor: not-allowed;
-                                                                                                                                                                                                          }
+                                                                                                                                             /* ------------------------------
+                                                                                                                                                Buttons (shared visual language)
+                                                                                                                                                --------------------------------*/
+                                                                                                                                                button{
+                                                                                                                                                  background: transparent;
+                                                                                                                                                    border: 1px solid var(--border);
+                                                                                                                                                      color: var(--fg);
+                                                                                                                                                        border-radius: 999px;
+                                                                                                                                                          font-family: inherit;
+                                                                                                                                                          }
 
-                                                                                                                                                                                                          /* ------------------------------
-                                                                                                                                                                                                             Text inputs (write mode)
-                                                                                                                                                                                                             --------------------------------*/
-                                                                                                                                                                                                             textarea{
-                                                                                                                                                                                                               font-family: inherit;
-                                                                                                                                                                                                               }
-                                                                                                                                                                                                               
+                                                                                                                                                          button:disabled{
+                                                                                                                                                            opacity: 0.6;
+                                                                                                                                                              cursor: not-allowed;
+                                                                                                                                                              }
+
+                                                                                                                                                              /* ------------------------------
+                                                                                                                                                                 Text inputs
+                                                                                                                                                                 --------------------------------*/
+                                                                                                                                                                 textarea{
+                                                                                                                                                                   font-family: inherit;
+                                                                                                                                                                   }
+
+                                                                                                                                                                   /* ------------------------------
+                                                                                                                                                                      Reduced motion
+                                                                                                                                                                      --------------------------------*/
+                                                                                                                                                                      @media (prefers-reduced-motion: reduce){
+                                                                                                                                                                        .fadeIn{ animation: none !important; }
+                                                                                                                                                                          .signalDot{ animation: none !important; }
+                                                                                                                                                                          }
+                                                                                                                                                                          
