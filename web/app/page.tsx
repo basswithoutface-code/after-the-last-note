@@ -7,7 +7,7 @@ export default function Page() {
   const router = useRouter();
 
     // 0: blank
-      // 1: main text visible
+      // 1: main line visible
         // 2: enter visible (tap enabled + auto-advance starts)
           const [stage, setStage] = useState<0 | 1 | 2>(0);
             const timers = useRef<number[]>([]);
@@ -47,7 +47,7 @@ export default function Page() {
                                                                                                 <section className="stack" aria-label="Intro">
                                                                                                         {stage >= 1 && (
                                                                                                                   <p className={`mainLine ${stage === 1 ? "fadeIn" : ""}`}>
-                                                                                                                              No names. No echo. Just Now.
+                                                                                                                              No names. No echo. Just now.
                                                                                                                                         </p>
                                                                                                                                                 )}
 

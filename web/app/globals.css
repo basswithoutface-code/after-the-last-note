@@ -1,81 +1,152 @@
-:root{
-    --bg:#000000;
-      --fg: rgba(235,235,235,0.72);     /* main line soft gray */
-        --sub: rgba(235,235,235,0.28);    /* enter much dimmer */
-        }
+/* ------------------------------
+   Root variables
+   --------------------------------*/
+   :root{
+     --bg: #000000;
 
-        *{ box-sizing:border-box; }
+       /* Primary text (soft gray, not white) */
+         --fg: rgba(235,235,235,0.72);
 
-        html,body{ height:100%; }
+           /* Secondary / subordinate text */
+             --sub: rgba(235,235,235,0.28);
 
-        body{
-          margin:0;
-            background:var(--bg);
-              color:var(--fg);
-                font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-                }
+               /* UI borders */
+                 --border: rgba(235,235,235,0.35);
+                 }
 
-                /* Fullscreen + lower-third placement */
-                .screen{
-                  min-height: 100vh;
-                    min-height: 100dvh;
-                      position: relative;
-                        background: var(--bg);
+                 *{
+                   box-sizing: border-box;
+                   }
+
+                   /* ------------------------------
+                      Base document
+                      --------------------------------*/
+                      html,
+                      body{
+                        height: 100%;
                         }
 
-                        /* Centered horizontally, placed lower than center */
-                        .stack{
-                          position: absolute;
-                            left: 50%;
-                              top: 62%;
-                                transform: translate(-50%, -50%);
-                                  width: min(720px, 92vw);
-                                    text-align: center;
-                                    }
+                        body{
+                          margin: 0;
+                            background: var(--bg);
+                              color: var(--fg);
+                                font-family: ui-sans-serif, system-ui, -apple-system,
+                                               Segoe UI, Roboto, Helvetica, Arial;
+                                                 -webkit-font-smoothing: antialiased;
+                                                 }
 
-                                    .mainLine{
-                                      margin: 0;
-                                        font-size: 24px;
-                                          letter-spacing: 0.06em;
-                                            font-weight: 400;
-                                              color: var(--fg);
-                                              }
+                                                 /* ------------------------------
+                                                    Fullscreen screen container
+                                                    --------------------------------*/
+                                                    .screen{
+                                                      min-height: 100vh;
+                                                        min-height: 100dvh;
+                                                          position: relative;
+                                                            background: var(--bg);
+                                                            }
 
-                                              .enterLine{
-                                                margin: 28px 0 0 0;
-                                                  font-size: 18px;
-                                                    letter-spacing: 0.22em;
-                                                      font-weight: 400;
-                                                        color: var(--sub);
-                                                        }
+                                                            /* ------------------------------
+                                                               Centered content stack
+                                                                  (slightly lower than center)
+                                                                  --------------------------------*/
+                                                                  .stack{
+                                                                    position: absolute;
+                                                                      left: 50%;
+                                                                        top: 62%;
+                                                                          transform: translate(-50%, -50%);
+                                                                            width: min(720px, 92vw);
+                                                                              text-align: center;
+                                                                              }
 
-                                                        .fadeIn{
-                                                          animation: fadeIn 700ms ease-out both;
-                                                          }
+                                                                              /* ------------------------------
+                                                                                 Typography
+                                                                                 --------------------------------*/
+                                                                                 .mainLine{
+                                                                                   margin: 0;
+                                                                                     font-size: 24px;
+                                                                                       letter-spacing: 0.06em;
+                                                                                         font-weight: 400;
+                                                                                           color: var(--fg);
+                                                                                           }
 
-                                                          @keyframes fadeIn{
-                                                            from{ opacity:0; transform: translateY(6px); }
-                                                              to{ opacity:1; transform: translateY(0); }
-                                                              }
+                                                                                           .enterLine{
+                                                                                             margin: 28px 0 0 0;
+                                                                                               font-size: 18px;
+                                                                                                 letter-spacing: 0.22em;
+                                                                                                   font-weight: 400;
+                                                                                                     color: var(--sub);
+                                                                                                     }
 
-                                                              .signalWrap{
-                                                                  display: grid;
-                                                                    place-items: center;
-                                                                      margin-bottom: 26px;
-                                                                      }
+                                                                                                     /* ------------------------------
+                                                                                                        Fade-in animation
+                                                                                                        --------------------------------*/
+                                                                                                        .fadeIn{
+                                                                                                          animation: fadeIn 700ms ease-out both;
+                                                                                                          }
 
-                                                                      .signalDot{
-                                                                        width: 10px;
-                                                                          height: 10px;
-                                                                            border-radius: 999px;
-                                                                              background: rgba(235,235,235,0.55);
-                                                                                animation: pulse 1200ms ease-in-out infinite;
-                                                                                }
+                                                                                                          @keyframes fadeIn{
+                                                                                                            from{
+                                                                                                                opacity: 0;
+                                                                                                                    transform: translateY(6px);
+                                                                                                                      }
+                                                                                                                        to{
+                                                                                                                            opacity: 1;
+                                                                                                                                transform: translateY(0);
+                                                                                                                                  }
+                                                                                                                                  }
 
-                                                                                @keyframes pulse{
-                                                                                  0%   { transform: scale(1);   opacity: 0.35; }
-                                                                                    50%  { transform: scale(1.9); opacity: 0.85; }
-                                                                                      100% { transform: scale(1);   opacity: 0.35; }
-                                                                                      }
+                                                                                                                                  /* ------------------------------
+                                                                                                                                     Page 2: signal indicator
+                                                                                                                                     --------------------------------*/
+                                                                                                                                     .signalWrap{
+                                                                                                                                       display: grid;
+                                                                                                                                         place-items: center;
+                                                                                                                                           margin-bottom: 26px;
+                                                                                                                                           }
 
-                                                              
+                                                                                                                                           .signalDot{
+                                                                                                                                             width: 10px;
+                                                                                                                                               height: 10px;
+                                                                                                                                                 border-radius: 999px;
+                                                                                                                                                   background: rgba(235,235,235,0.55);
+                                                                                                                                                     animation: pulse 1200ms ease-in-out infinite;
+                                                                                                                                                     }
+
+                                                                                                                                                     @keyframes pulse{
+                                                                                                                                                       0%{
+                                                                                                                                                           transform: scale(1);
+                                                                                                                                                               opacity: 0.35;
+                                                                                                                                                                 }
+                                                                                                                                                                   50%{
+                                                                                                                                                                       transform: scale(1.9);
+                                                                                                                                                                           opacity: 0.85;
+                                                                                                                                                                             }
+                                                                                                                                                                               100%{
+                                                                                                                                                                                   transform: scale(1);
+                                                                                                                                                                                       opacity: 0.35;
+                                                                                                                                                                                         }
+                                                                                                                                                                                         }
+
+                                                                                                                                                                                         /* ------------------------------
+                                                                                                                                                                                            Buttons (shared visual language)
+                                                                                                                                                                                            --------------------------------*/
+                                                                                                                                                                                            button{
+                                                                                                                                                                                              background: transparent;
+                                                                                                                                                                                                border: 1px solid var(--border);
+                                                                                                                                                                                                  color: var(--fg);
+                                                                                                                                                                                                    border-radius: 999px;
+                                                                                                                                                                                                      font-family: inherit;
+                                                                                                                                                                                                      }
+
+                                                                                                                                                                                                      button:disabled{
+                                                                                                                                                                                                        opacity: 0.6;
+                                                                                                                                                                                                          cursor: not-allowed;
+                                                                                                                                                                                                          }
+
+                                                                                                                                                                                                          /* ------------------------------
+                                                                                                                                                                                                             Text inputs (write mode)
+                                                                                                                                                                                                             --------------------------------*/
+                                                                                                                                                                                                             textarea{
+                                                                                                                                                                                                               font-family: inherit;
+                                                                                                                                                                                                               }
+                                                                                                                                                                                                               
