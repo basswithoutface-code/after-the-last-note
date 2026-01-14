@@ -45,7 +45,8 @@ export default function RecordPage() {
                                                                                           const continueWithLimit = () => {
                                                                                               const res = consume("record_submit");
                                                                                                   if (!res.ok) {
-                                                                                                        goPremium();
+                                                                                                        router.push("/premium?reason=record");
+                                                                                                        
                                                                                                               return;
                                                                                                                   }
                                                                                                                       goListening();
