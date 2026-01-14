@@ -64,7 +64,7 @@ import {
                                                                                                                                                                                               </p>
 
                                                                                                                                                                                                       <p className="enterLine fadeIn" style={{ marginTop: 18 }}>
-                                                                                                                                                                                                                Unlimited.
+                                                                                                                                                                                                                Stay longer.
                                                                                                                                                                                                                         </p>
 
                                                                                                                                                                                                                                 <div style={{ marginTop: 22, display: "grid", gap: 14, justifyItems: "center" }}>
