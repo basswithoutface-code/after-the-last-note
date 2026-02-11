@@ -13,64 +13,63 @@ export default function HomePage() {
                 timers.current = [];
                   };
 
-                    useEffect(() => {
+                    const goNext = () => {
                         clearTimers();
+                            router.push("/second");
+                              };
 
-                            // 1s → main line
-                                timers.current.push(window.setTimeout(() => setStage(1), 1000));
+                                useEffect(() => {
+                                    clearTimers();
 
-                                    // +1.5s → enter
-                                        timers.current.push(window.setTimeout(() => setStage(2), 2500));
+                                        // 1s → main line
+                                            timers.current.push(window.setTimeout(() => setStage(1), 1000));
 
-                                            // +3s after enter → auto advance
-                                                timers.current.push(window.setTimeout(() => goNext(), 5500));
+                                                // +1.5s → enter
+                                                    timers.current.push(window.setTimeout(() => setStage(2), 2500));
 
-                                                    return () => clearTimers();
-                                                        // eslint-disable-next-line react-hooks/exhaustive-deps
-                                                          }, []);
+                                                        // +3s after enter → auto advance
+                                                            timers.current.push(window.setTimeout(() => goNext(), 5500));
 
-                                                            const goNext = () => {
-                                                                clearTimers();
-                                                                    router.push("/second");
-                                                                      };
+                                                                return () => clearTimers();
+                                                                    // eslint-disable-next-line react-hooks/exhaustive-deps
+                                                                      }, []);
 
                                                                         const onTap = () => {
-                                                                            if (stage >= 2) {
-                                                                                  goNext();
-                                                                                      }
-                                                                                        };
+                                                                            // allow tap-to-advance only once "enter" is visible
+                                                                                if (stage >= 2) goNext();
+                                                                                  };
 
-                                                                                          return (
-                                                                                              <main className="screen" onClick={onTap}>
-                                                                                                    {/* Logo */}
-                                                                                                          <div
-                                                                                                                  style={{
-                                                                                                                            position: "absolute",
-                                                                                                                                      top: 24,
-                                                                                                                                                left: 0,
-                                                                                                                                                          right: 0,
-                                                                                                                                                                    textAlign: "center",
-                                                                                                                                                                              letterSpacing: "0.28em",
-                                                                                                                                                                                        fontSize: 12,
-                                                                                                                                                                                                  color: "rgba(235,235,235,0.55)",
-                                                                                                                                                                                                            pointerEvents: "none",
-                                                                                                                                                                                                                    }}
-                                                                                                                                                                                                                          >
-                                                                                                                                                                                                                                  ATLN
-                                                                                                                                                                                                                                        </div>
+                                                                                    return (
+                                                                                        <main className="screen" onClick={onTap}>
+                                                                                              {/* logo / mark */}
+                                                                                                    <div
+                                                                                                            style={{
+                                                                                                                      position: "absolute",
+                                                                                                                                top: 24,
+                                                                                                                                          left: 0,
+                                                                                                                                                    right: 0,
+                                                                                                                                                              textAlign: "center",
+                                                                                                                                                                        letterSpacing: "0.28em",
+                                                                                                                                                                                  fontSize: 12,
+                                                                                                                                                                                            color: "rgba(235,235,235,0.55)",
+                                                                                                                                                                                                      pointerEvents: "none",
+                                                                                                                                                                                                              }}
+                                                                                                                                                                                                                    >
+                                                                                                                                                                                                                            ATLN
+                                                                                                                                                                                                                                  </div>
 
-                                                                                                                                                                                                                                              <section className="stack" aria-label="Intro">
-                                                                                                                                                                                                                                                      {stage >= 1 && (
-                                                                                                                                                                                                                                                                <p className={`mainLine ${stage === 1 ? "fadeIn" : ""}`}>
-                                                                                                                                                                                                                                                                            No names. No echo. Just now.
-                                                                                                                                                                                                                                                                                      </p>
-                                                                                                                                                                                                                                                                                              )}
+                                                                                                                                                                                                                                        <section className="stack" aria-label="intro">
+                                                                                                                                                                                                                                                {stage >= 1 && (
+                                                                                                                                                                                                                                                          <p className={`mainLine ${stage === 1 ? "fadeIn" : ""}`}>
+                                                                                                                                                                                                                                                                      no names. no echo. just now.
+                                                                                                                                                                                                                                                                                </p>
+                                                                                                                                                                                                                                                                                        )}
 
-                                                                                                                                                                                                                                                                                                      {stage >= 2 && (
-                                                                                                                                                                                                                                                                                                                <p className={`enterLine ${stage === 2 ? "fadeIn" : ""}`}>enter</p>
-                                                                                                                                                                                                                                                                                                                        )}
-                                                                                                                                                                                                                                                                                                                              </section>
-                                                                                                                                                                                                                                                                                                                                  </main>
-                                                                                                                                                                                                                                                                                                                                    );
-                                                                                                                                                                                                                                                                                                                                    }
-                                                                                                                                                                                                                                                                                                                                    
+                                                                                                                                                                                                                                                                                                {stage >= 2 && (
+                                                                                                                                                                                                                                                                                                          <p className={`enterLine ${stage === 2 ? "fadeIn" : ""}`}>enter</p>
+                                                                                                                                                                                                                                                                                                                  )}
+                                                                                                                                                                                                                                                                                                                        </section>
+                                                                                                                                                                                                                                                                                                                            </main>
+                                                                                                                                                                                                                                                                                                                              );
+                                                                                                                                                                                                                                                                                                                              }
+                                                                                                                                                                                                                                                                                                                              
