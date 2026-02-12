@@ -1,40 +1,30 @@
-import { NextRequest, NextResponse } from "next/server";
-import fs from "fs";
-import path from "path";
-import { randomUUID } from "crypto";
+import { NextResponse } from "next/server"
+import fs from "fs"
+import path from "path"
 
-const dataPath = path.join(process.cwd(), "data", "shared.json");
+const filePath = path.join(process.cwd(), "data", "shared.json")
 
-export async function POST(req: NextRequest) {
+export async function POST(req: Request) {
   try {
-      const body = await req.json();
-          const { type, content } = body;
+      const body = await req.json()
+          const { type, content } = body
 
-              if (!type || !content) {
-                    return NextResponse.json({ error: "invalid request" }, { status: 400 });
-                        }
+              const fileData = fs.readFileSync(filePath, "utf8")
+                  const parsed = JSON.parse(fileData)
 
-                            const file = fs.readFileSync(dataPath, "utf-8");
-                                const data = JSON.parse(file);
+                      if (type === "text") {
+                            parsed.text.push(content)
+                                }
 
-                                    const entry = {
-                                          id: randomUUID(),
-                                                content,
-                                                      createdAt: Date.now()
-                                                          };
+                                    if (type === "audio") {
+                                          parsed.audio.push(content)
+                                              }
 
-                                                              if (type === "text") {
-                                                                    data.text.push(entry);
-                                                                        } else if (type === "audio") {
-                                                                              data.audio.push(entry);
-                                                                                  } else {
-                                                                                        return NextResponse.json({ error: "invalid type" }, { status: 400 });
-                                                                                            }
+                                                  fs.writeFileSync(filePath, JSON.stringify(parsed, null, 2))
 
-                                                                                                fs.writeFileSync(dataPath, JSON.stringify(data, null, 2));
-
-                                                                                                    return NextResponse.json({ success: true });
-                                                                                                      } catch (error) {
-                                                                                                          return NextResponse.json({ error: "server error" }, { status: 500 });
-                                                                                                            }
-                                                                                                            }
+                                                      return NextResponse.json({ success: true })
+                                                        } catch (error) {
+                                                            console.error("SHARE ERROR:", error)
+                                                                return NextResponse.json({ error: "failed" }, { status: 500 })
+                                                                  }
+                                                                  }
