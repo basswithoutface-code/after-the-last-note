@@ -4,83 +4,110 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 
 export default function ListeningPage() {
-  const router = useRouter()
 
+  const router = useRouter()
     const [content, setContent] = useState<string | null>(null)
 
-      async function getRead() {
-          const res = await fetch("/api/random?type=text")
+      async function readMessage() {
+
+          const res = await fetch("/api/random")
               const data = await res.json()
-                  setContent(data.content)
-                    }
 
-                      async function getListen() {
-                          const res = await fetch("/api/random?type=audio")
-                              const data = await res.json()
+                  if (data.type === "text") {
+                        setContent(data.content)
+                            }
 
-                                  const audio = new Audio(data.content)
-                                      audio.play()
-                                        }
+                                if (data.type === "audio") {
+                                      const audio = new Audio(data.content)
+                                            audio.play()
+                                                }
 
-                                          async function shuffle() {
-                                              const res = await fetch("/api/random")
-                                                  const data = await res.json()
+                                                  }
 
-                                                      if (data.type === "text") {
-                                                            setContent(data.content)
-                                                                }
+                                                    async function listenAudio() {
 
-                                                                    if (data.type === "audio") {
-                                                                          const audio = new Audio(data.content)
-                                                                                audio.play()
-                                                                                    }
-                                                                                      }
+                                                        const res = await fetch("/api/random")
+                                                            const data = await res.json()
 
-                                                                                        if (content) {
-                                                                                            return (
-                                                                                                  <main
-                                                                                                          className="screen"
-                                                                                                                  onClick={() => setContent(null)}
-                                                                                                                          style={{
-                                                                                                                                    display: "flex",
-                                                                                                                                              justifyContent: "center",
-                                                                                                                                                        alignItems: "center",
-                                                                                                                                                                  textAlign: "center",
-                                                                                                                                                                            padding: "40px",
-                                                                                                                                                                                      fontSize: "18px"
-                                                                                                                                                                                              }}
-                                                                                                                                                                                                    >
-                                                                                                                                                                                                            {content}
-                                                                                                                                                                                                                  </main>
-                                                                                                                                                                                                                      )
-                                                                                                                                                                                                                        }
+                                                                if (data.type === "audio") {
+                                                                      const audio = new Audio(data.content)
+                                                                            audio.play()
+                                                                                }
 
-                                                                                                                                                                                                                          return (
-                                                                                                                                                                                                                              <main className="screen">
-                                                                                                                                                                                                                                    <section className="stack">
+                                                                                  }
 
-                                                                                                                                                                                                                                            <button className="pill" onClick={getRead}>
-                                                                                                                                                                                                                                                      read
-                                                                                                                                                                                                                                                              </button>
+                                                                                    async function shuffle() {
 
-                                                                                                                                                                                                                                                                      <button className="pill" onClick={getListen}>
-                                                                                                                                                                                                                                                                                listen
-                                                                                                                                                                                                                                                                                        </button>
+                                                                                        const res = await fetch("/api/random")
+                                                                                            const data = await res.json()
 
-                                                                                                                                                                                                                                                                                                <button className="pill" onClick={shuffle}>
-                                                                                                                                                                                                                                                                                                          shuffle
-                                                                                                                                                                                                                                                                                                                  </button>
+                                                                                                if (data.type === "text") {
+                                                                                                      setContent(data.content)
+                                                                                                          }
 
-                                                                                                                                                                                                                                                                                                                          <div style={{ height: "40px" }} />
+                                                                                                              if (data.type === "audio") {
+                                                                                                                    const audio = new Audio(data.content)
+                                                                                                                          audio.play()
+                                                                                                                              }
 
-                                                                                                                                                                                                                                                                                                                                  <button
-                                                                                                                                                                                                                                                                                                                                            className="pill"
-                                                                                                                                                                                                                                                                                                                                                      onClick={() => router.push("/third")}
-                                                                                                                                                                                                                                                                                                                                                              >
-                                                                                                                                                                                                                                                                                                                                                                        previous
-                                                                                                                                                                                                                                                                                                                                                                                </button>
+                                                                                                                                }
 
-                                                                                                                                                                                                                                                                                                                                                                                      </section>
-                                                                                                                                                                                                                                                                                                                                                                                          </main>
-                                                                                                                                                                                                                                                                                                                                                                                            )
-                                                                                                                                                                                                                                                                                                                                                                                            }
+                                                                                                                                  if (content) {
+                                                                                                                                      return (
+                                                                                                                                            <main
+                                                                                                                                                    className="screen"
+                                                                                                                                                            onClick={() => setContent(null)}
+                                                                                                                                                                    style={{
+                                                                                                                                                                              display: "flex",
+                                                                                                                                                                                        justifyContent: "center",
+                                                                                                                                                                                                  alignItems: "center",
+                                                                                                                                                                                                            textAlign: "center",
+                                                                                                                                                                                                                      padding: "40px",
+                                                                                                                                                                                                                                fontSize: "18px"
+                                                                                                                                                                                                                                        }}
+                                                                                                                                                                                                                                              >
+                                                                                                                                                                                                                                                      {content}
+                                                                                                                                                                                                                                                            </main>
+                                                                                                                                                                                                                                                                )
+                                                                                                                                                                                                                                                                  }
+
+                                                                                                                                                                                                                                                                    return (
+                                                                                                                                                                                                                                                                        <main className="screen">
+
+                                                                                                                                                                                                                                                                              <section className="stack">
+
+                                                                                                                                                                                                                                                                                      <button
+                                                                                                                                                                                                                                                                                                className="pill"
+                                                                                                                                                                                                                                                                                                          onClick={readMessage}
+                                                                                                                                                                                                                                                                                                                  >
+                                                                                                                                                                                                                                                                                                                            read
+                                                                                                                                                                                                                                                                                                                                    </button>
+
+                                                                                                                                                                                                                                                                                                                                            <button
+                                                                                                                                                                                                                                                                                                                                                      className="pill"
+                                                                                                                                                                                                                                                                                                                                                                onClick={listenAudio}
+                                                                                                                                                                                                                                                                                                                                                                        >
+                                                                                                                                                                                                                                                                                                                                                                                  listen
+                                                                                                                                                                                                                                                                                                                                                                                          </button>
+
+                                                                                                                                                                                                                                                                                                                                                                                                  <button
+                                                                                                                                                                                                                                                                                                                                                                                                            className="pill"
+                                                                                                                                                                                                                                                                                                                                                                                                                      onClick={shuffle}
+                                                                                                                                                                                                                                                                                                                                                                                                                              >
+                                                                                                                                                                                                                                                                                                                                                                                                                                        shuffle
+                                                                                                                                                                                                                                                                                                                                                                                                                                                </button>
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                        <div style={{ height: "40px" }} />
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                <button
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                          className="pill"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    onClick={() => router.push("/third")}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            >
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      previous
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              </button>
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </section>
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </main>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          )
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          }
